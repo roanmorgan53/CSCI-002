@@ -1,0 +1,3 @@
+﻿  main_RoanMorgan.cpp
+C:\Users\roanl\OneDrive\Documents\Visual Studio Projects\CSCI 002\InClassLab1CompileAndRunSomething\InClassLab1CompileAndRunSomething\main_RoanMorgan.cpp(16,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  InClassLab1CompileAndRunSomething.vcxproj -> C:\Users\roanl\OneDrive\Documents\Visual Studio Projects\CSCI 002\InClassLab1CompileAndRunSomething\x64\Debug\InClassLab1CompileAndRunSomething.exe

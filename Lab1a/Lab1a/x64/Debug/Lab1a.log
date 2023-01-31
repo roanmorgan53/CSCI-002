@@ -1,0 +1,7 @@
+﻿  main_RoanMorganFixed.cpp
+C:\Users\roanl\OneDrive\Documents\Visual Studio Projects\CSCI 002\Lab1a\Lab1a\main_RoanMorganFixed.cpp(12,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\roanl\OneDrive\Documents\Visual Studio Projects\CSCI 002\Lab1a\Lab1a\main_RoanMorganFixed.cpp(38,34): warning C4311: '<function-style-cast>': pointer truncation from 'char *' to 'long'
+C:\Users\roanl\OneDrive\Documents\Visual Studio Projects\CSCI 002\Lab1a\Lab1a\main_RoanMorganFixed.cpp(38,34): warning C4302: '<function-style-cast>': truncation from 'char *' to 'long'
+C:\Users\roanl\OneDrive\Documents\Visual Studio Projects\CSCI 002\Lab1a\Lab1a\main_RoanMorganFixed.cpp(52,33): warning C4311: '<function-style-cast>': pointer truncation from 'char *' to 'int'
+C:\Users\roanl\OneDrive\Documents\Visual Studio Projects\CSCI 002\Lab1a\Lab1a\main_RoanMorganFixed.cpp(52,33): warning C4302: '<function-style-cast>': truncation from 'char *' to 'int'
+  Lab1a.vcxproj -> C:\Users\roanl\OneDrive\Documents\Visual Studio Projects\CSCI 002\Lab1a\x64\Debug\Lab1a.exe
