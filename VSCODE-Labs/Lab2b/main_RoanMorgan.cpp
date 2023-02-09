@@ -9,13 +9,11 @@ int binarySearch(string wordlist[], int first, int last, string target);
 
 int main(void)
 {
-    string wordlist[5] = {
-        "Apple", "Banana", "Cat", "Dog", "Elephant", 
-        };
+    string wordlist[5] = {"Apple", "Banana", "Cat", "Dog", "Elephant"};
 
         cout << wordlist[binarySearch(wordlist, 0, 4, "Dog")] << endl;
 
-    return (0);
+    return(0);
 }
 
 int binarySearch(string wordlist[], int first, int last, string target)
