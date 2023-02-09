@@ -1,6 +1,6 @@
 //Roan Morgan
 //2.6.23
-//RECURSION TRACKING!!!
+//RECURSION TRACING!!!
 #include <iostream>
 #include <cstdlib>
 using namespace std;
