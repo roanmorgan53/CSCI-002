@@ -6,8 +6,8 @@ double powIterate(double x, int n);
 double powRecursive(double x, int n);
 
 int main(void){
-    double x = 5;
-    int n = 3;
+    double x = 4;
+    int n = 4;
 
     cout << powIterate(x,n) << endl;
 
@@ -17,21 +17,18 @@ int main(void){
 }
 
 double powIterate(double x, int n){
-
-    for(int i = 0; i < n; i+=2){
-        x = x*x;
+    double xTemp = 1;
+    
+    for(int i = 0; i<n; i++){
+        xTemp *= x; 
     }
 
-    return x;
+    return xTemp;
 }
 
 double powRecursive(double x, int n){
-    if(n <= 0){
-        return x;
+    if(n == 0){
+        return 1;
     }
-    else{
-        n--;
-        x = x * powRecursive(x,n);
-    }
-    return x;
+    return x * powRecursive(x, n-1);
 }
