@@ -6,7 +6,7 @@ double powIterate(double x, int n);
 double powRecursive(double x, int n);
 
 int main(void){
-    double x = 4;
+    double x = 3;
     int n = 4;
 
     cout << powIterate(x,n) << endl;
