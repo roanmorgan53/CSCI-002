@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <vector>
 using namespace std;
 
 struct Node {
@@ -25,8 +26,6 @@ int main(void) {
     char userin = 'y';
     string temp = "N/A";
 
-    cout << endl;
-
     do {
 
         if (isFirst) {
@@ -47,7 +46,7 @@ int main(void) {
             cur->contents = temp;
         }
 
-        cout << "\twould you like to add another element(y / n) :";
+        cout << "add element? (y/n):";
         cin >> userin;
 
         cout << endl;
@@ -62,11 +61,11 @@ int main(void) {
     print(a);
     cout << endl;
 
-    cout << "Elements #: " << count(a) << endl;
-
     cout << "Backwards: ";
     printR(a);
     cout << endl;
+
+    cout << "Elements #: " << count(a) << endl;
 
     delete a;
 
@@ -87,23 +86,20 @@ void print(Node* arg)
 void printR(Node* arg)
 {
     Node* cur = arg;
-    Node* prev = nullptr;
-    Node* next = nullptr;
+    vector<string> r;
 
     do {
-        next = cur->next;
-        cur->next = prev;
-        prev = cur;
-        cur = next;
-    } while (cur != nullptr);
+        if (cur != nullptr) {
+            r.push_back(cur->contents);
+        }
 
-    cur = prev;
-
-    do {
-        cout << cur->contents << " ";
         cur = cur->next;
 
     } while (cur != nullptr);
+    
+    for (int i = r.size() - 1; i >= 0; i--) {
+        cout << r[i] << " ";
+    }
      
 }
 
