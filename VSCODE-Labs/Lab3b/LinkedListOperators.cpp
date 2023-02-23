@@ -25,29 +25,38 @@ int main(void) {
     Node* a = nullptr; //LL
     Node* temp = nullptr; //iterator
     string userin = "err";
+    char userEnter = 'y';
+    char runAgain = 'y';
 
-    pushBack(a, "does");
-    pushBack(a, "this");
-    pushBack(a, "work");
+    do {
+        a = nullptr; //LL
+        system("cls");
+        cout << "Linked List Operators!\n---------------------" << endl;
 
-    temp = a;
-    temp = temp->next;
+        do {
+            cout << "Enter a word: ";
+            cin >> userin;
 
-    insert(temp, "thing");
+            pushBack(a, userin);
 
-    pushFront(a, "Wait...");
+            cout << "Add Element (y/n): ";
+            cin >> userEnter;
+            cout << endl;
+        } while (userEnter == 'y');
 
+        cout << "Forwards: ";
+        print(a);
+        cout << endl;
 
+        cout << "Backwards: ";
+        printR(a);
+        cout << endl;
 
-    cout << "Forwards: ";
-    print(a);
-    cout << endl;
-
-    cout << "Backwards: ";
-    printR(a);
-    cout << endl;
-
-    cout << "Elements #: " << count(a) << endl;
+        cout << "Elements #: " << count(a) << endl << endl;
+    
+        cout << "Run Again? (y/n):";
+        cin >> runAgain;
+    } while (runAgain == 'y');
 
 
 
@@ -77,11 +86,11 @@ void pushBack(Node*& arg, string str)
     temp->next = nullptr;
 }
 
-void pushFront(Node*& arg, string str){
+void pushFront(Node*& arg, string str) {
     Node* cur = new Node();
     cur->contents = str;
     cur->next = arg;
-    
+
     arg = cur;
 }
 
@@ -99,24 +108,36 @@ void print(Node* arg)
 void printR(Node* arg)
 {
     Node* cur = arg;
-    vector<string> r;
+    
+    //make another node and store the variables of arg backwards
+    Node* temp = nullptr;
 
-    do {
-        if (cur != nullptr) {
-            r.push_back(cur->contents);
-        }
+    //reverse the list order
+    while (cur != nullptr) {
+        Node* next = cur->next;
+        cur->next = temp; //bring cur to the end
+        temp = cur; 
+        cur = next;
+    }
 
-        cur = cur->next;
+    arg = temp;
 
-    } while (cur != nullptr);
+    print(arg);
 
-    for (int i = r.size() - 1; i >= 0; i--) {
-        cout << r[i] << " ";
+    cur = arg;
+    temp = nullptr;
+
+    //reverse the list again
+    while (cur != nullptr) {
+        Node* next = cur->next;
+        cur->next = temp; //bring cur to the end
+        temp = cur;
+        cur = next;
     }
 
 }
 
-void insert(Node* target, string contents){
+void insert(Node* target, string contents) {
 
     Node* toAdd = new Node();
     toAdd->contents = contents;
@@ -125,7 +146,7 @@ void insert(Node* target, string contents){
     target->next = toAdd;
 
 
-    
+
 
 
 }
