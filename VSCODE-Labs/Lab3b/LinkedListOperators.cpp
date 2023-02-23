@@ -13,49 +13,28 @@ struct Node {
 
 };
 
+void pushBack(Node*& arg, string str);
 void print(Node* arg);
 void printR(Node* arg);
+void insert(Node* Target, string Contents);
 int count(Node* arg);
 
 int main(void) {
 
     Node* a = nullptr; //LL
-    Node* cur = nullptr; //iterator
+    Node* temp = nullptr; //iterator
+    string userin = "err";
 
-    bool isFirst = true;
-    char userin = 'y';
-    string temp = "N/A";
+    pushBack(a, "Does");
+    pushBack(a, "this");
+    pushBack(a, "work");
 
-    do {
+    temp = a;
+    temp = temp->next;
 
-        if (isFirst) {
-            cur = new Node();
-            cout << "Input a word: ";
-            cin >> temp;
-            cur->contents = temp;
+    insert(temp, "thing");
 
-            a = cur;
 
-            isFirst = false;
-        }
-        else {
-            cur->next = new Node();
-            cur = cur->next;
-            cout << "Input a word: ";
-            cin >> temp;
-            cur->contents = temp;
-        }
-
-        cout << "add element? (y/n):";
-        cin >> userin;
-
-        cout << endl;
-
-    } while (userin == 'y');
-
-    cur->next = nullptr;
-
-    cur = a;
 
     cout << "Forwards: ";
     print(a);
@@ -67,9 +46,32 @@ int main(void) {
 
     cout << "Elements #: " << count(a) << endl;
 
+
+
     delete a;
 
     return(0);
+}
+
+void pushBack(Node*& arg, string str)
+{
+    Node* temp = arg;
+
+    if (arg == nullptr) {
+        arg = new Node();
+        arg->contents = str;
+        arg->next = nullptr;
+        return;
+    }
+
+    while (temp->next != nullptr) {
+        temp = temp->next;
+    }
+
+    temp->next = new Node();
+    temp = temp->next;
+    temp->contents = str;
+    temp->next = nullptr;
 }
 
 void print(Node* arg)
@@ -96,11 +98,25 @@ void printR(Node* arg)
         cur = cur->next;
 
     } while (cur != nullptr);
-    
+
     for (int i = r.size() - 1; i >= 0; i--) {
         cout << r[i] << " ";
     }
-     
+
+}
+
+void insert(Node* target, string contents){
+
+    Node* toAdd = new Node();
+    toAdd->contents = contents;
+    toAdd->next = target->next;
+
+    target->next = toAdd;
+
+
+    
+
+
 }
 
 int count(Node* arg)
