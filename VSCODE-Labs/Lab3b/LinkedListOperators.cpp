@@ -14,6 +14,7 @@ struct Node {
 };
 
 void pushBack(Node*& arg, string str);
+void pushFront(Node*& arg, string str);
 void print(Node* arg);
 void printR(Node* arg);
 void insert(Node* Target, string Contents);
@@ -25,7 +26,7 @@ int main(void) {
     Node* temp = nullptr; //iterator
     string userin = "err";
 
-    pushBack(a, "Does");
+    pushBack(a, "does");
     pushBack(a, "this");
     pushBack(a, "work");
 
@@ -33,6 +34,8 @@ int main(void) {
     temp = temp->next;
 
     insert(temp, "thing");
+
+    pushFront(a, "Wait...");
 
 
 
@@ -72,6 +75,14 @@ void pushBack(Node*& arg, string str)
     temp = temp->next;
     temp->contents = str;
     temp->next = nullptr;
+}
+
+void pushFront(Node*& arg, string str){
+    Node* cur = new Node();
+    cur->contents = str;
+    cur->next = arg;
+    
+    arg = cur;
 }
 
 void print(Node* arg)
