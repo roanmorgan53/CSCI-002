@@ -35,6 +35,7 @@ struct SinglyLinkedList{
     Node* head;
 
     void pushBack(string arg);
+    int size();
 };
 
 //regular c-type function for printing the Linked List
