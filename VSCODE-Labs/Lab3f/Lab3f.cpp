@@ -12,22 +12,26 @@ private:
 	Node* next;
 	Node* prev;
 public:
-	//constructors
 	Node() {
 		content = "";
 		next = nullptr;
 		prev = nullptr;
-	};
-	Node(string w) {
-		content = w;
-	};
-	Node(string w, Node* n, Node* p) {
-		content = w;
+	}
+	Node(string c) {
+		content = c;
+		next = nullptr;
+		prev = nullptr;
+	}
+	Node(string c, Node* n, Node* p) {
+		content = c;
 		next = n;
 		prev = p;
 	}
+	~Node() {
+		//cout << "Node Nuked" << endl;
+	}
 
-	//get and sets
+	//get and set methods
 	string getContent(void) {
 		return content;
 	}
@@ -52,8 +56,9 @@ public:
 		return cur;
 	}
 
-	void setContent(string w) {
-		content = w;
+
+	void setContent(string c) {
+		content = c;
 	}
 	void setNext(Node* n) {
 		next = n;
@@ -61,62 +66,164 @@ public:
 	void setPrev(Node* p) {
 		prev = p;
 	}
+};
 
-	//useful methods
-	void pushBack(string w) {
-		Node* last = getLast();
-		Node* newNode = new Node(w);
-		last->setNext(newNode);
-		newNode->setPrev(last);
+class DoublyLinkedList {
+private:
+	Node* head;
+	Node* tail;
+public:
+	DoublyLinkedList() {
+		head = nullptr;
+		tail = nullptr;
 	}
 
-	void popBack(void){
-		Node* last = getLast();
-		delete last->getNext();
-		last = nullptr;
+	//get and sets
+	Node* getHead(void) {
+		return head;
+	}
+	Node* getTail(void) {
+		return tail;
+	}
 
+	//useful methods
+	void pushBack(string c) {
+		Node* newNode = new Node(c);
+		if (head == nullptr) {
+			head = newNode; 
+			tail = newNode;
+		}
+		else {
+			tail->setNext(newNode);
+			newNode->setPrev(tail);
+			tail = newNode;
+		}
+	};
 
+	void popBack(void) {
+		Node* previous = tail->getPrev();
+		previous->setNext(nullptr);
+		delete tail;
+		tail = previous;
+	};
+
+	void pushFront(string c) {
+		Node* newNode = new Node(c);
+		head->setPrev(newNode);
+		Node* oldHead = head;
+		head = head->getPrev();
+		head->setNext(oldHead);
+	};
+
+	void insertAfter(string c, Node* location) {
+		Node* newNode = new Node(c);
+		Node* locNext = location->getNext();
+		location->setNext(newNode);
+		newNode->setPrev(location);
+		newNode->setNext(locNext);
+	};
+
+	void nuke(void) {
+		Node* buddy = head;
+
+		while (buddy != nullptr) {
+			Node* rat = buddy->getNext();
+			delete buddy;
+			buddy = rat;
+
+		}
+	}
+
+	Node* searchFor(string data) {
+		Node* cur = head;
+
+		while (cur->getContent() != data && cur->getNext() != nullptr) {
+			cur = cur->getNext();
+		}
+
+		if(cur->getContent() == data){
+			return cur; 
+		}
+		else {
+			return nullptr;
+		}
+	};
+
+	int size(void) {
+		Node* cur = head;
+
+		int count = 0;
+		while (cur->getNext() != nullptr) {
+			count++;
+			cur = cur->getNext();
+		}
+
+		return count;
 	}
 
 };
 
-void print(Node* arg);
+void print(DoublyLinkedList wordList) {
+	Node* cur = wordList.getHead();
 
-int main(void) {
-	//make a node ptr
-	Node* fruitList = new Node();
-	Node* cur = fruitList;
-
-	//strings array
-	string test = "test ";
-
-	//instantiate
-	for (int i = 0; i < 5; i++) {
-		cur->setContent(test);
-		cur->setNext(new Node());
-		cur->setPrev(cur);
-		cur = cur->getNext();
+	if (wordList.getHead() == nullptr) {
+		cout << "Empty List" << endl;
+		return;
 	}
 
-	cur->pushBack("Pushed Back");
+	cout << "Contents: ";
+	while (cur->getNext() != nullptr) {
+		if (cur->getNext()->getNext() != nullptr) {
+			cout << cur->getContent() << ", ";
+		}
+		else {
+			cout << cur->getContent() << endl;
+		}
+		cur = cur->getNext();
+	}
+};
 
-	print(fruitList);
+int main(void) {
 
-	cur->popBack();
+	//init dll
+	DoublyLinkedList nameList;
 
-	print(fruitList);
+	//push joe back 5 times
+	for (int i = 0; i < 5; i++) {
+		nameList.pushBack("Jane");
+	}
 
+	//get rid of 2 janes
+	for (int i = 0; i < 1; i++) {
+		nameList.popBack();
+	}
 
+	//put 3 Jacks in the front
+	for (int i = 0; i < 3; i++) {
+		nameList.pushFront("Jack");
+	}
+
+	//insert Marc after the first Jack
+	nameList.insertAfter("Marc", nameList.getHead());
+
+	//print the list
+	print(nameList);
+
+	//count the list
+	cout << "# members: " << nameList.size() << endl;
+
+	//search the list for string
+	string search = "Marc";
+	if (nameList.searchFor(search) != nullptr) {
+		cout << search << " found at address " << nameList.searchFor(search) << endl;
+	}
+	else {
+		cout << search << " not found" << endl;
+	}
+
+	//deallocate
+	nameList.nuke();
 
 	return 0;
 }
 
-void print(Node* arg){
-	Node* cur = arg;
-	while(cur->getNext() != nullptr){
-		cout << cur->getContent() << endl;
-		cur = cur->getNext();
-	}
-
-	delete cur;
-}
