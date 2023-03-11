@@ -70,31 +70,53 @@ public:
 		newNode->setPrev(last);
 	}
 
+	void popBack(void){
+		Node* last = getLast();
+		delete last->getNext();
+		last = nullptr;
 
-
-
-};
-
-int main(void) {
-	//seed random
-	srand(time(0));
-	
-	//make a node ptr
-	Node* fruitList;
-	Node* cur = fruitList;
-
-	//strings array
-	string randStrings[] = { "Apple", "Banana", "Watermelon" };
-
-	//instantiate
-	for (int i = 0; i < 10; i++) {
-		cur->setContent(randStrings[rand() % 3]);
-		cur->setNext(new Node());
-		cur->setPrev(cur);
-		cur = cur->getNext();
 
 	}
 
+};
+
+void print(Node* arg);
+
+int main(void) {
+	//make a node ptr
+	Node* fruitList = new Node();
+	Node* cur = fruitList;
+
+	//strings array
+	string test = "test ";
+
+	//instantiate
+	for (int i = 0; i < 5; i++) {
+		cur->setContent(test);
+		cur->setNext(new Node());
+		cur->setPrev(cur);
+		cur = cur->getNext();
+	}
+
+	cur->pushBack("Pushed Back");
+
+	print(fruitList);
+
+	cur->popBack();
+
+	print(fruitList);
+
+
 
 	return 0;
+}
+
+void print(Node* arg){
+	Node* cur = arg;
+	while(cur->getNext() != nullptr){
+		cout << cur->getContent() << endl;
+		cur = cur->getNext();
+	}
+
+	delete cur;
 }
