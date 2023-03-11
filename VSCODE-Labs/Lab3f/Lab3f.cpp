@@ -1,154 +1,100 @@
 //Roan Morgan
-//Lab 3f: Methods for Doubly Linked Lists
-//3.8.23
+//3.10.23
+//Lab 3f
 #include <iostream>
-#include <string>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 class Node {
 private:
-	//init variables
 	string content;
 	Node* next;
 	Node* prev;
-
 public:
 	//constructors
-	Node();
-	Node(string);
-	Node(string, Node*);
-	Node(string, Node*, Node*);
-
-	//deconstructor
-	~Node() { cout << "BOOM" << endl; }
-
-	//get & sets
-	string getContent(void){
-		return content;
+	Node() {
+		content = "";
+		next = nullptr;
+		prev = nullptr;
 	};
-	Node* getNext(void) {
-		return next;
+	Node(string w) {
+		content = w;
 	};
-	Node* getPrev(void) {
-		return prev;
-	};
-	void setContent(string arg) {
-		content = arg;
-	};
-	void setNext(Node* nextPtr) {
-		next = nextPtr;
-	};
-	void setPrev(Node* prevPtr) {
-		prev = prevPtr;
-	};
-
-};
-
-class DoublyLinkedList {
-private:
-	Node* head;
-	Node* tail;
-
-public:
-	//constructor
-	DoublyLinkedList() {
-		head = nullptr;
-		tail = nullptr;
+	Node(string w, Node* n, Node* p) {
+		content = w;
+		next = n;
+		prev = p;
 	}
 
-	//get & sets
-	Node* getHead(void) {
-		return head;
-	};
-	Node* getTail(void) {
-		return tail;
-	};
+	//get and sets
+	string getContent(void) {
+		return content;
+	}
+	Node* getNext(void) {
+		return next;
+	}
+	Node* getPrev(void) {
+		return prev;
+	}
+	Node* getFirst(void) {
+		Node* cur = this;
+		while (cur->getPrev() != nullptr) {
+			cur = cur->getPrev();
+		}
+		return cur;
+	}
+	Node* getLast(void) {
+		Node* cur = this;
+		while (cur->getNext() != nullptr) {
+			cur = cur->getNext();
+		}
+		return cur;
+	}
 
-	void pushBack(string);
-	void print(void);
+	void setContent(string w) {
+		content = w;
+	}
+	void setNext(Node* n) {
+		next = n;
+	}
+	void setPrev(Node* p) {
+		prev = p;
+	}
+
+	//useful methods
+	void pushBack(string w) {
+		Node* last = getLast();
+		Node* newNode = new Node(w);
+		last->setNext(newNode);
+		newNode->setPrev(last);
+	}
+
+
+
 
 };
 
 int main(void) {
 	//seed random
 	srand(time(0));
-
-	//init variables
-	DoublyLinkedList list;
-	int count = 10;
-	string randString[] = {"Apple", "Banana", "Watermelon", "Bread", "House"};
-
-	//populate the list
-	for (int i = 0; i < 10; i++) {
-		list.pushBack(randString[rand() % 5]);
-	}
-
-	//print the list
-	list.print();
 	
-	return 0;
-}
+	//make a node ptr
+	Node* fruitList;
+	Node* cur = fruitList;
 
-Node::Node()
-{
-	next = new Node();
-	content = "N/A";
-}
+	//strings array
+	string randStrings[] = { "Apple", "Banana", "Watermelon" };
 
-Node::Node(string arg)
-{
-	content = arg;
-}
-
-Node::Node(string arg, Node* argNext)
-{
-	content = arg;
-	next = argNext;
-}
-
-Node::Node(string arg, Node* argNext, Node* argPrev)
-{
-	content = arg;
-	next = argNext;
-	prev = argPrev;
-}
-
-void DoublyLinkedList::pushBack(string arg)
-{
-	Node* cur = getHead();
-
-	if (cur == nullptr) {
-		cur = new Node(arg);
-		cur->setPrev(cur);
-		cur->setNext(nullptr);
-		return;
-	}
-	else {
-		while (cur->getNext() != nullptr) {
-			cur->setPrev(cur);
-			cur = cur->getNext();
-		}
-		cur->setNext(new Node(arg));
+	//instantiate
+	for (int i = 0; i < 10; i++) {
+		cur->setContent(randStrings[rand() % 3]);
+		cur->setNext(new Node());
 		cur->setPrev(cur);
 		cur = cur->getNext();
-		cur->setNext(nullptr);
+
 	}
 
 
-}
-
-void DoublyLinkedList::print(void)
-{
-	Node* cur = getHead();
-
-	if (cur == nullptr) {
-		cout << "Empty List";
-		return;
-	}
-	else {
-		while (cur->getNext() != nullptr) {
-			cout << cur->getContent() << ", ";
-			cur = cur->getNext();
-		}
-	}
+	return 0;
 }
