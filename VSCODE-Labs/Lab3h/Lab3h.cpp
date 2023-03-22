@@ -3,6 +3,7 @@
 //3.8.23
 #include <iostream>
 #include <cstdlib> 
+#include <vector>
 using namespace std;
 
 class Person {
@@ -48,22 +49,19 @@ public:
 
 int main(void) {
 
-    Student* robert = new Student(5.5, 18, "Robert", "CSCI");
-    Athlete* john = new Athlete(6.1, 22, "John", 12.2);
-    Employee* earl = new Employee(5.6, 45, "Earl", 1912203);
+    vector<Person*> peopleList;
 
-    robert->display();
-    delete robert;
+    peopleList.push_back(new Student(5.5, 18, "Robert", "CSCI"));
+    peopleList.push_back(new Athlete(6.1, 22, "John", 12.2));
+    peopleList.push_back(new Employee(5.6, 45, "Earl", 1912203));
 
-    cout << endl;
+    for (int i = 0; i < peopleList.size(); i++) {
+        peopleList[i]->display();
+    }
 
-    john->display();
-    delete john;
-
-    cout << endl;
-
-    earl->display();
-    delete earl;
+    for (int i = 0; i < peopleList.size(); i++) {
+        delete peopleList[i];
+    }
 
     return 0;
 }
