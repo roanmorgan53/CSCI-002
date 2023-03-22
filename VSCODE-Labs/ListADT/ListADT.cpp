@@ -1,11 +1,10 @@
 //Roan Morgan
-//3.10.23
-//Lab 3f
+//3.13.23
+//List ADT
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
-
 template <class T>
 class Node {
 private:
@@ -17,15 +16,12 @@ public:
 	Node<T>(T c);
 	Node<T>(T c, Node* n, Node* p);
 	~Node<T>();
-
 	//get and set methods
 	T getContent(void);
 	Node<T>* getNext(void);
 	Node<T>* getPrev(void);
 	Node<T>* getFirst(void);
 	Node<T>* getLast(void);
-
-
 	void setContent(T c);
 	void setNext(Node<T>* n);
 	void setPrev(Node<T>* p);
@@ -37,105 +33,28 @@ private:
 	Node<T>* head;
 	Node<T>* tail;
 public:
-	DoublyLinkedList<T>() {
-		head = nullptr;
-		tail = nullptr;
-	}
+	DoublyLinkedList<T>();
 
 	//get and sets
-	Node<T>* getHead(void) {
-		return head;
-	}
-	Node<T>* getTail(void) {
-		return tail;
-	}
+	Node<T>* getHead(void);
+	Node<T>* getTail(void);
 
 	//useful methods
-	void pushBack(T c) {
-		Node<T>* newNode = new Node<T>(c);
-		if (head == nullptr) {
-			head = newNode; 
-			tail = newNode;
-		}
-		else {
-			tail->setNext(newNode);
-			newNode->setPrev(tail);
-			tail = newNode;
-		}
-	};
-
-	void popBack(void) {
-		Node<T>* previous = tail->getPrev();
-		previous->setNext(nullptr);
-		delete tail;
-		tail = previous;
-	};
-
-	void pushFront(T c) {
-		Node<T>* newNode = new Node<T>(c);
-		head->setPrev(newNode);
-		Node<T>* oldHead = head;
-		head = head->getPrev();
-		head->setNext(oldHead);
-	};
-
-	void insertAfter(T c, Node<T>* location) {
-		Node<T>* newNode = new Node<T>(c);
-		Node<T>* locNext = location->getNext();
-		location->setNext(newNode);
-		newNode->setPrev(location);
-		newNode->setNext(locNext);
-	};
-
-	void nuke(void) {
-		Node<T>* buddy = head;
-
-		while (buddy != nullptr) {
-			Node<T>* rat = buddy->getNext();
-			delete buddy;
-			buddy = rat;
-
-		}
-	}
-
-	Node<T>* searchFor(T data) {
-		Node<T>* cur = head;
-
-		while (cur->getContent() != data && cur->getNext() != nullptr) {
-			cur = cur->getNext();
-		}
-
-		if(cur->getContent() == data){
-			return cur; 
-		}
-		else {
-			return nullptr;
-		}
-	};
-
-	int size(void) {
-		Node<T>* cur = head;
-
-		int count = 0;
-		while (cur->getNext() != nullptr) {
-			count++;
-			cur = cur->getNext();
-		}
-
-		return count;
-	}
-
+	void pushBack(T c);
+	void popBack(void);
+	void pushFront(T c);
+	void insertAfter(T c, Node<T>* location);
+	void nuke(void);
+	Node<T>* searchFor(T data);
+	int size(void);
 };
-
 template <typename T>
 void print(DoublyLinkedList<T> wordList) {
 	Node<T>* cur = wordList.getHead();
-
 	if (wordList.getHead() == nullptr) {
 		cout << "Empty List" << endl;
 		return;
 	}
-
 	cout << "Contents: ";
 	while (cur->getNext() != nullptr) {
 		if (cur->getNext()->getNext() != nullptr) {
@@ -147,9 +66,8 @@ void print(DoublyLinkedList<T> wordList) {
 		cur = cur->getNext();
 	}
 };
-
 int main(void) {
-
+	
 	//init dll
 	DoublyLinkedList<string> nameList;
 
@@ -180,7 +98,8 @@ int main(void) {
 	//search the list for string
 	string search = "Marc";
 	if (nameList.searchFor(search) != nullptr) {
-		cout << search << " found at address " << nameList.searchFor(search) << endl;
+		cout << search << " found at address " << nameList.searchFor(search) <<
+			endl;
 	}
 	else {
 		cout << search << " not found" << endl;
@@ -188,7 +107,6 @@ int main(void) {
 
 	//deallocate
 	nameList.nuke();
-
 	return 0;
 }
 
@@ -261,8 +179,101 @@ template <typename T>
 void Node<T>::setNext(Node<T>* n) {
 	next = n;
 }
-    
+
 template <typename T>
 void Node<T>::setPrev(Node<T>* p) {
 	prev = p;
+}
+
+template <typename T>
+DoublyLinkedList<T>::DoublyLinkedList() {
+	head = nullptr;
+	tail = nullptr;
+}
+
+//get and sets
+template <typename T>
+Node<T>* DoublyLinkedList<T>::getHead(void) {
+	return head;
+}
+
+template <typename T>
+Node<T>* DoublyLinkedList<T>::getTail(void) {
+	return tail;
+}
+
+//useful methods
+template <typename T>
+void DoublyLinkedList<T>::pushBack(T c) {
+	Node<T>* newNode = new Node<T>(c);
+	if (head == nullptr) {
+		head = newNode;
+		tail = newNode;
+	}
+	else {
+		tail->setNext(newNode);
+		newNode->setPrev(tail);
+		tail = newNode;
+	}
+};
+
+template <typename T>
+void DoublyLinkedList<T>::popBack(void) {
+	Node<T>* previous = tail->getPrev();
+	previous->setNext(nullptr);
+	delete tail;
+	tail = previous;
+};
+
+template <typename T>
+void DoublyLinkedList<T>::pushFront(T c) {
+	Node<T>* newNode = new Node<T>(c);
+	head->setPrev(newNode);
+	Node<T>* oldHead = head;
+	head = head->getPrev();
+	head->setNext(oldHead);
+};
+
+template <typename T>
+void DoublyLinkedList<T>::insertAfter(T c, Node<T>* location) {
+	Node<T>* newNode = new Node<T>(c);
+	Node<T>* locNext = location->getNext();
+	location->setNext(newNode);
+	newNode->setPrev(location);
+	newNode->setNext(locNext);
+};
+
+template <typename T>
+void DoublyLinkedList<T>::nuke(void) {
+	Node<T>* buddy = head;
+	while (buddy != nullptr) {
+		Node<T>* rat = buddy->getNext();
+		delete buddy;
+		buddy = rat;
+	}
+}
+
+template <typename T>
+Node<T>* DoublyLinkedList<T>::searchFor(T data) {
+	Node<T>* cur = head;
+	while (cur->getContent() != data && cur->getNext() != nullptr) {
+		cur = cur->getNext();
+	}
+	if (cur->getContent() == data) {
+		return cur;
+	}
+	else {
+		return nullptr;
+	}
+};
+
+template <typename T>
+int DoublyLinkedList<T>::size(void) {
+	Node<T>* cur = head;
+	int count = 0;
+	while (cur->getNext() != nullptr) {
+		count++;
+		cur = cur->getNext();
+	}
+	return count;
 }
