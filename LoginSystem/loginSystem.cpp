@@ -20,11 +20,15 @@ int main(void) {
 	char userin;
 	string tempUserName;
 	string tempPass;
+	string tempDeleteName;
 	char endLoop = 'n';
-	char leave = 'n';
+	string leave = "n";
 
 	//main loop
 	while (exit == 'n') { 
+
+		logout = 'n';
+
 
 		system("CLS");
 
@@ -101,7 +105,7 @@ int main(void) {
 				}
 				catch (exception(err)) {
 					cout << "Error: " << err.what();
-
+					userin = 'n';
 					Sleep(500);
 				}
 
@@ -116,7 +120,7 @@ int main(void) {
 					cout << "Error: " << err.what();
 				}
 
-				while (logout != 'y') {
+				while (logout != 'y' && userin != 'n') {
 
 					system("CLS");
 
@@ -150,6 +154,8 @@ int main(void) {
 					}
 					//no change password
 					else {
+						leave = 'n';
+
 						cout << "List users? (y/n): ";
 						cin >> userin;
 						cin.ignore();
@@ -168,9 +174,9 @@ int main(void) {
 								cout << cur->first << endl;
 							}
 
-							while (leave != 'y') {
-								cout << "\nwould you like to exit? (y/n): ";
-								cin >> leave;
+							while (leave != "") {
+								cout << "\nenter to exit...";
+								getline(cin, leave);
 							}
 
 						}
@@ -183,6 +189,27 @@ int main(void) {
 							//yes delete users
 							if (userin == 'y') {
 								//delete a user of choice
+
+								//add change password functionality
+								system("CLS");
+
+								//replaced project description to new page
+								cout << "Design Project: Login System" << endl;
+
+								cout << "Delete Users:\n\n";
+
+								cout << "Username to Delete: ";
+								getline(cin, tempDeleteName);
+
+								try {
+									if (isName) {
+										userList.erase(tempDeleteName);
+									}
+								}
+								catch (exception(err)) {
+									cout << "Error: " << err.what();
+									Sleep(500);
+								}
 							}
 							//no delete users
 							else {
