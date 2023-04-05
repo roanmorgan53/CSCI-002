@@ -12,16 +12,18 @@ bool isNameDup(map<string, string>, string);
 bool isName(map<string, string>, string);
 bool isValidLogin(map<string, string>, string, string);
 
+void listUsers(map<string, string>);
+
 int main(void) {
 
+	map<string, string> userList;
 	char logout = 'n';
 	char exit = 'n';
-	map<string, string> userList;
+	char endLoop = 'n';
 	char userin;
 	string tempUserName;
 	string tempPass;
 	string tempDeleteName;
-	char endLoop = 'n';
 	string leave = "n";
 
 	//main loop
@@ -170,14 +172,7 @@ int main(void) {
 							cout << "Design Project: Login System" << endl;
 
 							cout << "Complete List of Users:\n\n";
-							for (auto cur = userList.begin(); cur != userList.end(); cur++) {
-								cout << cur->first << endl;
-							}
-
-							while (leave != "") {
-								cout << "\nenter to exit...";
-								getline(cin, leave);
-							}
+							listUsers(userList);
 
 						}
 						//no list users
@@ -227,7 +222,7 @@ int main(void) {
 			}
 			//no login
 			else {
-				cout << "\nTerminate program? (y/n): ";
+				cout << "Terminate program? (y/n): ";
 				cin >> exit;
 			}
 		}
@@ -274,4 +269,17 @@ bool isValidLogin(map<string, string> ulist, string username, string password) {
 
 	throw exception("Login Not Recognized");
 
+}
+
+void listUsers(map<string,string> ulist) {
+	string exit = "n";
+
+	for (auto cur = ulist.begin(); cur != ulist.end(); cur++) {
+		cout << cur->first << endl;
+	}
+
+	while (exit != "") {
+		cout << "\nenter to exit...";
+		getline(cin, exit);
+	}
 }
