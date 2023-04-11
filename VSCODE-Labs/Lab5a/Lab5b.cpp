@@ -1,14 +1,14 @@
 //Roan Morgan
-//Lab 5a: Two Basic Search Functions 
+//Lab 5b: Two Basic Search Functions 
 //4.10.23
 #include <iostream>
 #include <vector>
 using namespace std;
 
-void bubbleSort(vector<int>& nums);
+void bubbleSort(vector<int>&);
 void print(vector<int>&);
-int linearSearch(vector<int>&, int&);
-int binarySearch(vector<int>&, int&);
+int linearSearch(vector<int>&, int&, int&);
+int binarySearch(vector<int>&, int&, int&);
 
 int main(void) {
     srand(time(0));
@@ -18,6 +18,7 @@ int main(void) {
     vector<int> nums;
     string runtime = "y";
     int userin;
+    int count = 0;
 
     //init nums
     for (int i = 0; i < size; i++) {
@@ -28,6 +29,8 @@ int main(void) {
     bubbleSort(nums);
 
     while (runtime != "n") {
+        count = 0;
+
         system("CLS");
 
         //project descriptions
@@ -42,17 +45,23 @@ int main(void) {
 
         //linear search
         cout << "\nLinear Search:\n";
-        if (linearSearch(nums, userin) != -1) {
+        if (linearSearch(nums, userin, count) != -1) {
             cout << userin << ": found!\n";
+            cout << "Comparisons: " << count;
+            cout << endl;
         }
         else {
             cout << "integer not found...\n";
         }
 
+        count = 0;
+
         //bilinear search
-        cout << "Binary Search:\n";
-        if (binarySearch(nums, userin) != -1) {
+        cout << "\nBinary Search:\n";
+        if (binarySearch(nums, userin, count) != -1) {
             cout << userin << ": found!\n";
+            cout << "Comparisons: " << count;
+            cout << endl;
         }
         else {
             cout << "integer not found...\n";
@@ -95,22 +104,27 @@ void print(vector<int>& nums) {
     cout << endl;
 }
 
-int linearSearch(vector<int>& nums, int& target) {
+int linearSearch(vector<int>& nums, int& target, int& count) {
     for (int i = 0; i < nums.size(); i++) {
+        count++;
         if (nums[i] == target) {
+            count++;
             return nums[i];
         }
+        count++;
     }
+    count++;
 
     return -1;
 }
 
-int binarySearch(vector<int>& nums, int& target)
+int binarySearch(vector<int>& nums, int& target, int& count)
 {
     int left = 0;
     int right = nums.size() - 1;
 
     while (left <= right) {
+        count += 2;
         int mid = left + (right - left) / 2;
 
         if (nums[mid] == target) {
@@ -122,7 +136,9 @@ int binarySearch(vector<int>& nums, int& target)
         else {
             right = mid - 1;
         }
+        count++;
     }
+    count++;
 
     return -1;
 }
